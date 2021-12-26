@@ -1,10 +1,23 @@
 plugins {
     id 'java'
+    id 'idea'
 }
 
 group = "com.suntri.${rootProject.name}"
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
+
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom implementation
+    integrationTestRuntimeOnly.extendsFrom runtimeOnly
+}
 
 repositories {
     mavenCentral()
@@ -17,8 +30,32 @@ dependencies {
     testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${juitJupiterVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${juitJupiterVersion}"
+
+    //integration tests
+    integrationTestImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+    integrationTestImplementation "org.junit.jupiter:junit-jupiter-api:${juitJupiterVersion}"
+    integrationTestRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${juitJupiterVersion}"
 }
 
 test {
     useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+check.dependsOn integrationTest
+
+idea {
+    module {
+        testSourceDirs += sourceSets.integrationTest.allJava.srcDirs
+        testResourceDirs += sourceSets.integrationTest.resources.srcDirs
+    }
 }
