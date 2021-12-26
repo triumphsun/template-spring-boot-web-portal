@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = "com.suntri.${rootProject.name}"
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //production
+
+    //tests
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${juitJupiterVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${juitJupiterVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
