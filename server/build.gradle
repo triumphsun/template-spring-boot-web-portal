@@ -1,11 +1,13 @@
 plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springManagementVersion}"
     id 'java'
     id 'idea'
 }
 
 group = "com.suntri.${rootProject.name}"
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 sourceSets {
     integrationTest {
@@ -25,13 +27,16 @@ repositories {
 
 dependencies {
     //production
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     //tests
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${juitJupiterVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${juitJupiterVersion}"
 
     //integration tests
+    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     integrationTestImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
     integrationTestImplementation "org.junit.jupiter:junit-jupiter-api:${juitJupiterVersion}"
     integrationTestRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${juitJupiterVersion}"
