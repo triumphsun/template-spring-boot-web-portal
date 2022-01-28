@@ -12,6 +12,14 @@ public class HomeController {
         path = {"/"},
         method = {RequestMethod.GET}
     )
+    public ModelAndView welcome(){
+        return new ModelAndView("welcome");
+    }
+
+    @RequestMapping(
+        path = {"/home"},
+        method = {RequestMethod.GET}
+    )
     public ModelAndView home(){
         return new ModelAndView("home");
     }
