@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/dashboard.html}">
+<head>
+    <link rel="stylesheet" th:href="@{/resources/css/home.css}">
+    <title>Manage Users</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Users</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <td>username</td>
+                <td>email</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user: ${users}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.email}"></td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+</body>
+</html>

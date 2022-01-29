@@ -108,7 +108,8 @@
                     </button>
                     <div class="collapse" id="account-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark rounded">New...</a></li>
+                            <li><a href="#" th:href="@{/account/users}"class="link-dark rounded">Manage Users</a></li>
+                            <li><a href="#" th:href="@{/account/roles}"class="link-dark rounded">Manage Roles</a></li>
                             <li><a href="#" class="link-dark rounded">Profile</a></li>
                             <li><a href="#" class="link-dark rounded">Settings</a></li>
                             <li><a href="#" class="link-dark rounded" th:href="@{/logout}">Sign out</a></li>
