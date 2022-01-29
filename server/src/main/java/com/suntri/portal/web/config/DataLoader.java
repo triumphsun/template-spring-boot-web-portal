@@ -24,9 +24,13 @@ public class DataLoader implements ApplicationListener {
             ApplicationReadyEvent readyEvent = (ApplicationReadyEvent) event;
             Environment env = readyEvent.getApplicationContext().getEnvironment();
             if(Arrays.stream(env.getActiveProfiles()).anyMatch("local"::equalsIgnoreCase)){
-                Role role = Role.builder().name("admin").build();
-                User userAdmin = User.builder().username("admin").password("admin").role(role).build();
+                Role roleAdmin = Role.builder().name("admin").build();
+                User userAdmin = User.builder().username("admin").password("admin").email("admin@example.com").role(roleAdmin).build();
                 this.userRepository.save(userAdmin);
+
+                Role roleGuest = Role.builder().name("guest").build();
+                User userGuest = User.builder().username("guest").password("guest").email("guest@example.com").role(roleGuest).build();
+                this.userRepository.save(userGuest);
             }
         }
 

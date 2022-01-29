@@ -25,7 +25,8 @@ public class User {
 
     @Column
     @ManyToMany(
-        cascade = CascadeType.PERSIST
+        cascade = CascadeType.PERSIST,
+        fetch = FetchType.EAGER
     )
     @JoinTable(
         name = "user_role",
@@ -44,6 +45,10 @@ public class User {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public Set<Role> getRoles() {
+        return this.roles;
     }
 
     public static Builder builder(){
