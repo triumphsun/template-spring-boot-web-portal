@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 @Order(100)
 @Configuration
@@ -19,6 +22,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService;
 
     @Bean
     protected PasswordEncoder getPasswordEncoder(){
@@ -40,7 +46,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/home")
         .and()
             .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+        .and()
+            .oauth2Login()
+                .defaultSuccessUrl("/home")
+                .userInfoEndpoint()
+                    .oidcUserService(this.oidcUserService);
     }
-
 }
