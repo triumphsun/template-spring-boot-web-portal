@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,16 +22,37 @@ public class AccountService {
     private RoleRepository roleRepository;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<UserListDto> listUsers(){
+    public List<UserDtoSummarized> listUsers(){
         List<User> users = this.userRepository.findAll();
-        List<UserListDto> dtos = users.stream().map(UserListDto::withUser).collect(Collectors.toList());
+        List<UserDtoSummarized> dtos = users.stream().map(UserDtoSummarized::withUser).collect(Collectors.toList());
         return dtos;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<RoleListDto> listRoles(){
+    public Optional<UserDtoElaborated> getUser(Long id){
+        Optional<User> optUser = this.userRepository.findById(id);
+        if(optUser.isPresent()){
+            return Optional.of(UserDtoElaborated.withUser(optUser.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<RoleDtoSummarized> listRoles(){
         List<Role> roles = this.roleRepository.findAll();
-        List<RoleListDto> dtos = roles.stream().map(RoleListDto::withRole).collect(Collectors.toList());
+        List<RoleDtoSummarized> dtos = roles.stream().map(RoleDtoSummarized::withRole).collect(Collectors.toList());
         return dtos;
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Optional<RoleDtoElaborated> getRole(Long id){
+        Optional<Role> optRole = this.roleRepository.findById(id);
+        if(optRole.isPresent()){
+            return Optional.of(RoleDtoElaborated.withRole(optRole.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }

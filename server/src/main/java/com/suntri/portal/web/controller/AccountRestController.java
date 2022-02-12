@@ -1,8 +1,8 @@
 package com.suntri.portal.web.controller;
 
 import com.suntri.portal.service.AccountService;
-import com.suntri.portal.service.RoleListDto;
-import com.suntri.portal.service.UserListDto;
+import com.suntri.portal.service.RoleDtoSummarized;
+import com.suntri.portal.service.UserDtoSummarized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class AccountRestController {
         path = { "/account/users" },
         method = { RequestMethod.GET }
     )
-    public List<UserListDto> restListUsers(){
+    public List<UserDtoSummarized> restListUsers(){
         return this.accountService.listUsers();
     }
 
@@ -33,7 +33,7 @@ public class AccountRestController {
             path = { "/account/roles" },
             method = { RequestMethod.GET }
     )
-    public List<RoleListDto> restListRoles(){
+    public List<RoleDtoSummarized> restListRoles(){
         return this.accountService.listRoles();
     }
 }

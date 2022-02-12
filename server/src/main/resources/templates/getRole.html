@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/dashboard.html}">
+<head>
+    <link rel="stylesheet" th:href="@{/resources/css/home.css}">
+    <title>Manage Users</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Roles</h2>
+    <p>
+        <a href="#" th:href="@{/account/roles}">Back to list</a>
+    </p>
+    <table class="table table-striped table-hover">
+        <tr>
+            <td>id</td>
+            <td th:text="${role.id}">user_id</td>
+        </tr>
+        <tr>
+            <td>username</td>
+            <td th:text="${role.name}">user_name</td>
+        </tr>
+        <tr>
+            <td>created at</td>
+            <td th:text="${role.createdAt}">user_createdAt</td>
+        </tr>
+        <tr>
+            <td>updated at</td>
+            <td th:text="${role.updatedAt}">user_updated_at</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

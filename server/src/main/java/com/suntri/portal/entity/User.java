@@ -1,13 +1,18 @@
 package com.suntri.portal.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -23,6 +28,16 @@ public class User {
     @Column
     private String email;
 
+    @Column(name="DATE_CREATED", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdAt;
+
+    @Column(name="DATE_UPDATED")
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date updatedAt;
+
     @Column
     @ManyToMany(
         cascade = CascadeType.PERSIST,
@@ -34,6 +49,10 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "rid")
     )
     private Set<Role> roles;
+
+    public Long getId(){
+        return this.id;
+    }
 
     public String getUsername() {
         return this.username;
@@ -51,6 +70,14 @@ public class User {
         return this.roles;
     }
 
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return this.updatedAt;
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -61,6 +88,7 @@ public class User {
         private String password;
         private String email;
         private Set<Role> roles = new HashSet<>();
+        private Date createdAt;
 
         private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -92,6 +120,7 @@ public class User {
             user.password = this.password;
             user.email = this.email;
             user.roles = this.roles;
+            user.createdAt = new Date(System.currentTimeMillis());
             return user;
         }
 

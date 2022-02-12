@@ -11,14 +11,16 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <td>id</td>
                 <td>username</td>
                 <td>email</td>
             </tr>
         </thead>
         <tbody>
             <tr th:each="user: ${users}">
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.email}"></td>
+                <td><a href="#" th:href="@{/account/users/} + ${user.id}" th:text="${user.id}">user_id</a> </td>
+                <td th:text="${user.username}">user_username</td>
+                <td th:text="${user.email}">user_email</td>
             </tr>
         </tbody>
 
